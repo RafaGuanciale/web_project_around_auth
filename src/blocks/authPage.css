@@ -1,0 +1,69 @@
+.authPage__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.authPage__title {
+  width: 358px;
+  height: 29px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29px;
+  text-align: center;
+  color: #ffffff;
+  margin: 60px 0 50px;
+}
+.authPage__form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+.authPage__input__input {
+  width: 358px;
+  height: 27px;
+  box-sizing: border-box;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid #cccccc;
+  font-family: "Inter";
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: #ffffff;
+  padding-bottom: 13px;
+}
+.authPage__input__input::placeholder {
+  color: #ffffff;
+}
+
+.authPage__button {
+  width: 358px;
+  height: 58px;
+  background: #ffffff;
+  border: none;
+  border-radius: 2px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  color: #000000;
+  cursor: pointer;
+  margin-top: 186px;
+}
+.authPage__login__link {
+  width: 358px;
+  font-family: "Inter";
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-align: center;
+  color: #ffffff;
+  text-decoration: none;
+}

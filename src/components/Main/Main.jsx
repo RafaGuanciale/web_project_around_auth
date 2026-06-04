@@ -6,7 +6,7 @@ import Popup from "./components/Popup/Popup";
 import { useEffect, useState, useContext } from "react";
 import Card from "./components/Card/Card";
 import api from "../../utils/api";
-import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext.jsx";
 
 export default function Main({
   popup,

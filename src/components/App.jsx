@@ -3,12 +3,18 @@ import Header from "./Header/Header";
 import Main from "./Main/Main";
 import Footer from "./Footer/Footer";
 import api from "../utils/api";
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import { CurrentUserProvider } from "../contexts/CurrentUserContext.jsx";
+import { Route, Routes, useNavigate } from "react-router-dom";
+import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
+import LoginPage from "./pages/LoginPage.jsx";
+import RegisterPage from "./pages/RegisterPage.jsx";
+import * as auth from "../utils/auth.js";
 
 function App() {
-  const [currentUser, setCurrentUser] = useState({});
   const [popup, setPopup] = useState(null);
   const [cards, setCards] = useState([]);
+
+  const navigate = useNavigate();
 
   function handleOpenPopup(popup) {
     setPopup(popup);
@@ -18,30 +24,9 @@ function App() {
   }
 
   useEffect(() => {
-    (async () => {
-      await api.getUserInfo().then((res) => setCurrentUser(res));
-    })();
-  }, []);
-  
-    useEffect(() => {
     api.getCards().then((res) => setCards(res));
   }, []);
 
-  const handleUpdateUser = async (data) => {
-    await api
-      .updateUserInfo(data)
-      .then((res) => {
-        setCurrentUser(res);
-        handleClosePopup();
-      })
-      .catch((error) => console.error(error));
-  };
-  const handleUpdateAvatar = async (data) => {
-    await api.updateProfilePicture(data).then((res) => {
-      setCurrentUser(res);
-      handleClosePopup();
-    });
-  };
   async function handleCardLike(card) {
     const isLiked = card.isLiked;
     await api
@@ -72,28 +57,55 @@ function App() {
       handleClosePopup();
     });
   }
+
+  const handleRegistration = ({ email, password }) => {
+    console.log(email, password);
+    auth
+      .register(email, password)
+      .then((res) => {
+        console.log(res);
+        //popup de confirmação de registro
+        navigate("/signin");
+      })
+      .catch(console.error);
+  };
+
   return (
-    <CurrentUserContext.Provider
-      value={{
-        currentUser,
-        handleUpdateUser,
-        handleUpdateAvatar,
-        handleAddPlaceSubmit,
-      }}
-    >
-      <div className="page__content">
-        <Header />
-        <Main
-          cards={cards}
-          onOpenPopup={handleOpenPopup}
-          onClosePopup={handleClosePopup}
-          onCardLike={handleCardLike}
-          onCardDelete={handleCardDelete}
-          popup={popup}
+    <div className="page__content">
+      <Header />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Main
+              cards={cards}
+              onOpenPopup={handleOpenPopup}
+              onClosePopup={handleClosePopup}
+              onCardLike={handleCardLike}
+              onCardDelete={handleCardDelete}
+              popup={popup}
+            />
+          }
         />
-        <Footer />
-      </div>
-    </CurrentUserContext.Provider>
+        <Route
+          path="/signup"
+          element={
+            <ProtectedRoute anonymous>
+              <RegisterPage handleRegistration={handleRegistration} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/signin"
+          element={
+            <ProtectedRoute anonymous>
+              <LoginPage />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+      <Footer />
+    </div>
   );
 }
 
