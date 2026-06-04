@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Header from "./Header/Header";
 import Main from "./Main/Main";
 import Footer from "./Footer/Footer";
+import Popup from "./Main/components/Popup/Popup.jsx";
 import api from "../utils/api";
 import { CurrentUserProvider } from "../contexts/CurrentUserContext.jsx";
 import { Route, Routes, useNavigate } from "react-router-dom";
@@ -9,12 +10,15 @@ import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
 import LoginPage from "./pages/LoginPage.jsx";
 import RegisterPage from "./pages/RegisterPage.jsx";
 import * as auth from "../utils/auth.js";
+import InfoTooltip from "./Main/components/Popup/components/InfoTooltip/InfoTooltip.jsx";
+import { AuthContext } from "../contexts/AuthContext.jsx";
 
 function App() {
   const [popup, setPopup] = useState(null);
   const [cards, setCards] = useState([]);
 
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
   function handleOpenPopup(popup) {
     setPopup(popup);
@@ -59,15 +63,29 @@ function App() {
   }
 
   const handleRegistration = ({ email, password }) => {
-    console.log(email, password);
     auth
       .register(email, password)
       .then((res) => {
-        console.log(res);
-        //popup de confirmação de registro
+        handleOpenPopup({
+          children: <InfoTooltip isSuccess={true} />,
+        });
         navigate("/signin");
       })
-      .catch(console.error);
+      .catch((error) => {
+        console.error(error);
+        handleOpenPopup({
+          children: <InfoTooltip isSuccess={false} />,
+        });
+        return;
+      });
+  };
+
+  const handleLogin = ({ email, password }) => {
+    auth.authorize(email, password).then((data) => {
+      login({ email, token: data.token });
+      console.log(data);
+      navigate("/");
+    });
   };
 
   return (
@@ -99,12 +117,17 @@ function App() {
           path="/signin"
           element={
             <ProtectedRoute anonymous>
-              <LoginPage />
+              <LoginPage handleLogin={handleLogin} />
             </ProtectedRoute>
           }
         />
       </Routes>
       <Footer />
+      {popup && (
+        <Popup onClose={handleClosePopup} title={popup.title}>
+          {popup.children}
+        </Popup>
+      )}
     </div>
   );
 }

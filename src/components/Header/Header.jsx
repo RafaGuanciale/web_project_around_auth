@@ -2,12 +2,10 @@ import { Link, useLocation } from "react-router-dom";
 import logo from "../../images/logo.svg";
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
-import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 function Header() {
   const location = useLocation();
-  const { isLogged } = useContext(AuthContext);
-  const { currentUser } = useContext(CurrentUserContext);
+  const { isLogged, user, logout } = useContext(AuthContext);
 
   function headerLink() {
     if (location.pathname === "/signup") {
@@ -24,8 +22,10 @@ function Header() {
         className="logo header__logo"
         src={logo}
       />
-      <Link className="header__link">{isLogged ? currentUser.name : ""}</Link>
-      <Link className="header__link">{isLogged ? "sair" : headerLink()}</Link>
+      <div className="header__profile">
+        <Link className="header__link">{isLogged ? user.email : ""}</Link>
+        <Link to="signin" onClick={logout} className="header__link">{isLogged ? "Sair" : headerLink()}</Link>
+      </div>
     </header>
   );
 }

@@ -13,6 +13,11 @@
   object-fit: contain;
 }
 
+.header__profile{
+  display: flex;
+  gap: 56px;
+}
+
 .header__link {
   font-family: Inter;
   font-weight: 400;
