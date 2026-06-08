@@ -90,6 +90,4 @@ Algumas melhorias que poderiam aumentar a segurança do projeto são:
 * Adicionar proteção contra força bruta utilizando rate limiting.
 * Monitorar dependências regularmente com npm audit.
 
-## Conclusão
 
-O projeto implementa os conceitos básicos de autenticação e controle de acesso aprendidos até o momento. Apesar de ser adequado para fins educacionais, existem melhorias importantes de segurança que poderiam ser aplicadas em um ambiente de produção para reduzir riscos relacionados a XSS, roubo de tokens e ataques automatizados.
