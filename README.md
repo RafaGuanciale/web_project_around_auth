@@ -10,7 +10,7 @@ Este sprint focou na implementação do fluxo completo de autenticação com JWT
 
 ## Links
 
-- **GitHub Pages:** [https://rafaguanciale.github.io/web_project_around_auth/](https://rafaguanciale.github.io/web_project_around_auth/)
+- **Vercel app:** [https://web-project-around-auth-qgjciexc8-rafaguanciales-projects.vercel.app//](https://web-project-around-auth-qgjciexc8-rafaguanciales-projects.vercel.app//)
 
 ---
 
@@ -41,10 +41,10 @@ Este sprint focou na implementação do fluxo completo de autenticação com JWT
 
 ### Autenticação
 
-**JWT (JSON Web Token)** | Token gerado pela API após login, usado para autenticar requisições 
-**localStorage** | Armazenamento do token no navegador para persistência de sessão 
+**JWT (JSON Web Token)** | Token gerado pela API após login, usado para autenticar requisições
+**localStorage** | Armazenamento do token no navegador para persistência de sessão
 **checkToken** | Validação do token ao carregar a aplicação |
-**ProtectedRoute** | Componente HOC que protege rotas privadas e anônimas 
+**ProtectedRoute** | Componente HOC que protege rotas privadas e anônimas
 
 ---
 
@@ -84,10 +84,8 @@ As dependências do projeto são gerenciadas pelo npm. Antes da publicação em 
 
 Algumas melhorias que poderiam aumentar a segurança do projeto são:
 
-* Armazenar JWT em cookies HttpOnly em vez de localStorage.
-* Implementar Content Security Policy (CSP).
-* Realizar validação e sanitização de dados no backend.
-* Adicionar proteção contra força bruta utilizando rate limiting.
-* Monitorar dependências regularmente com npm audit.
-
-
+- Armazenar JWT em cookies HttpOnly em vez de localStorage.
+- Implementar Content Security Policy (CSP).
+- Realizar validação e sanitização de dados no backend.
+- Adicionar proteção contra força bruta utilizando rate limiting.
+- Monitorar dependências regularmente com npm audit.
