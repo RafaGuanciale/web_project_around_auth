@@ -2,9 +2,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  padding: 0 30px;
+  box-sizing: border-box;
 }
 .authPage__title {
-  width: 358px;
+  width: 100%;
+  max-width: 358px;
   height: 29px;
   font-family: "Inter";
   font-style: normal;
@@ -20,11 +24,15 @@
   flex-direction: column;
   align-items: center;
   gap: 30px;
+  width: 100%;
+  max-width: 358px;
 }
 .authPage__input__input {
-  width: 358px;
+  width: 100%;
+  max-width: 358px;
   height: 27px;
   box-sizing: border-box;
+  max-width: 358px;
   background: transparent;
   border: none;
   border-bottom: 2px solid #cccccc;
@@ -41,7 +49,8 @@
 }
 
 .authPage__button {
-  width: 358px;
+  width: 100%;
+  max-width: 358px;
   height: 58px;
   background: #ffffff;
   border: none;
@@ -66,4 +75,10 @@
   text-align: center;
   color: #ffffff;
   text-decoration: none;
+}
+
+@media screen and (max-width: 544px) {
+  .authPage__button {
+    margin-top: 173px;
+  }
 }

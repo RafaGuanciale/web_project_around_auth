@@ -9,7 +9,7 @@ export const register = (email, password) => {
     },
     body: JSON.stringify({ email, password }),
   }).then((res) => {
-    return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
+    return res.ok ? res.json() : Promise.reject(`Error: ${res.status} ${res.message} `);
   });
 };
 

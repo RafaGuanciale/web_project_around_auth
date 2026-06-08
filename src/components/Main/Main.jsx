@@ -1,11 +1,9 @@
-import avatar from "../../images/avatar.jpg";
 import NewCard from "./components/Popup/components/NewCard/NewCard";
 import EditProfile from "./components/Popup/components/EditProfile/EditProfile";
 import EditAvatar from "./components/Popup/components/EditAvatar/EditAvatar";
 import Popup from "./components/Popup/Popup";
-import { useEffect, useState, useContext } from "react";
+import { useContext } from "react";
 import Card from "./components/Card/Card";
-import api from "../../utils/api";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext.jsx";
 
 export default function Main({
@@ -15,10 +13,11 @@ export default function Main({
   cards,
   onCardLike,
   onCardDelete,
+  onAddPlace,
 }) {
   const { currentUser } = useContext(CurrentUserContext);
 
-  const newCardPopup = { title: "Novo card", children: <NewCard /> };
+  const newCardPopup = { title: "Novo card", children: <NewCard onAddPlace={onAddPlace}/> };
   const editProfilePopup = {
     title: "Editar perfil",
     children: <EditProfile />,

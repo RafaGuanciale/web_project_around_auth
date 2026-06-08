@@ -1,12 +1,18 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 import api from "../utils/api";
+import { AuthContext } from "./AuthContext";
 
 export const CurrentUserContext = createContext(null);
 
 export function CurrentUserProvider({ children }) {
   const [currentUser, setCurrentUser] = useState({});
+  const { isLogged } = useContext(AuthContext);
 
   useEffect(() => {
+    if (!isLogged) {
+      return;
+    }
+
     (async () => {
       try {
         const response = await api.getUserInfo();
@@ -15,11 +21,12 @@ export function CurrentUserProvider({ children }) {
         console.error(error);
       }
     })();
-  }, []);
+  }, [isLogged]);
 
   const handleUpdateUser = async (data) => {
     try {
       const response = await api.updateUserInfo(data);
+       console.log(response);
       setCurrentUser(response);
     } catch (error) {
       console.error(error);

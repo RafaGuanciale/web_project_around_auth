@@ -19,11 +19,12 @@ function RegisterPage({ handleRegistration }) {
     e.preventDefault();
     handleRegistration(data);
   };
+  
   return (
     <div className="authPage__container">
       <p className="authPage__title">Inscrever-se</p>
       <form className="authPage__form" onSubmit={handleSubmit}>
-        <div className="authPage__form__input">
+        <div className="authPage__input__input">
           <input
             id="email"
             className="authPage__input__input"
@@ -34,7 +35,7 @@ function RegisterPage({ handleRegistration }) {
             onChange={handleChange}
           />
         </div>
-        <div className="authPage__form__input">
+        <div className="authPage__input__input">
           <input
             id="password"
             className="authPage__input__input"

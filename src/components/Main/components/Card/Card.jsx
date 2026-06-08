@@ -1,7 +1,5 @@
-import { useEffect, useContext } from "react";
 import ImagePopup from "../Popup/components/ImagePopup/ImagePopup";
 import RemoveCard from "../Popup/components/RemoveCard/RemoveCard";
-import { CurrentUserContext } from "../../../../contexts/CurrentUserContext.jsx";
 
 export default function Card(props) {
   const { name, link, isLiked } = props.card;
@@ -12,7 +10,6 @@ export default function Card(props) {
     title: "Tem certeza?",
     children: <RemoveCard onCardDelete={onCardDelete} card={props.card} />,
   };
-  const { currentUser } = useContext(CurrentUserContext);
   const handleCardLike = () => onCardLike(props.card);
 
   return (

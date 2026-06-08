@@ -9,13 +9,16 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
 import LoginPage from "./pages/LoginPage.jsx";
 import RegisterPage from "./pages/RegisterPage.jsx";
-import * as auth from "../utils/auth.js";
+import { register, authorize, checkToken } from "../utils/auth.js";
 import InfoTooltip from "./Main/components/Popup/components/InfoTooltip/InfoTooltip.jsx";
 import { AuthContext } from "../contexts/AuthContext.jsx";
+import { getToken } from "../utils/token.js";
+import AppSkeleton from "./Loading/Loading.jsx";
 
 function App() {
   const [popup, setPopup] = useState(null);
   const [cards, setCards] = useState([]);
+  const [loading, setLoading] = useState(!!getToken());
 
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
@@ -29,6 +32,26 @@ function App() {
 
   useEffect(() => {
     api.getCards().then((res) => setCards(res));
+  }, []);
+
+  useEffect(() => {
+    const jwt = getToken();
+    if (!jwt) {
+      return;
+    }
+
+    checkToken(jwt)
+      .then((data) => {
+        login({
+          token: jwt,
+          email: data.data.email,
+        });
+      })
+      .catch(console.error)
+      .finally(() => {
+        setLoading(false);
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function handleCardLike(card) {
@@ -63,9 +86,8 @@ function App() {
   }
 
   const handleRegistration = ({ email, password }) => {
-    auth
-      .register(email, password)
-      .then((res) => {
+    register(email, password)
+      .then(() => {
         handleOpenPopup({
           children: <InfoTooltip isSuccess={true} />,
         });
@@ -81,12 +103,15 @@ function App() {
   };
 
   const handleLogin = ({ email, password }) => {
-    auth.authorize(email, password).then((data) => {
+    authorize(email, password).then((data) => {
       login({ email, token: data.token });
-      console.log(data);
       navigate("/");
     });
   };
+
+  if (loading) {
+    return <AppSkeleton />;
+  }
 
   return (
     <div className="page__content">
@@ -95,14 +120,17 @@ function App() {
         <Route
           path="/"
           element={
-            <Main
-              cards={cards}
-              onOpenPopup={handleOpenPopup}
-              onClosePopup={handleClosePopup}
-              onCardLike={handleCardLike}
-              onCardDelete={handleCardDelete}
-              popup={popup}
-            />
+            <ProtectedRoute>
+              <Main
+                cards={cards}
+                onOpenPopup={handleOpenPopup}
+                onClosePopup={handleClosePopup}
+                onCardLike={handleCardLike}
+                onCardDelete={handleCardDelete}
+                onAddPlace={handleAddPlaceSubmit}
+                popup={popup}
+              />
+            </ProtectedRoute>
           }
         />
         <Route

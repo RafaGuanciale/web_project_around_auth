@@ -1,6 +1,5 @@
 import sucessLogo from "../../../../../../images/sucess.png";
 import failLogo from "../../../../../../images/fail.png";
-import { useState } from "react";
 
 export default function InfoTooltip({isSuccess}) {
  

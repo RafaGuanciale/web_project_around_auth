@@ -37,7 +37,7 @@
   max-width: 373px;
 }
 
-.profile__avatar-container{
+.profile__avatar-container {
   position: relative;
   margin-right: 29px;
 }
@@ -68,7 +68,7 @@
   opacity: 0.2;
 }
 
-.profile__avatar-container:hover .profile__image-button{
+.profile__avatar-container:hover .profile__image-button {
   display: flex;
 }
 
@@ -160,5 +160,8 @@
     width: 18px;
     height: 18px;
     background-size: 8px 8px;
+  }
+  .profile__avatar-container {
+    margin-right: 0;
   }
 }

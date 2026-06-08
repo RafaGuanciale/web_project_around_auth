@@ -1,5 +1,5 @@
 export default function RemoveCard(props) {
-  const { onCardDelete, card } = props;
+  const { onCardDelete } = props;
 
   const handleSubmit = (e) => {
     e.preventDefault();
