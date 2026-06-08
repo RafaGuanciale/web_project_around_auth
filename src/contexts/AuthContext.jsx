@@ -7,12 +7,12 @@ export function AuthProvider({ children }) {
   const [isLogged, setIsLogged] = useState(false);
   const [email, setEmail] = useState("");
 
-  const login = ({ token, email }) => {
+  const onLogin = ({ token, email }) => {
     setIsLogged(true);
     saveToken(token);
     setEmail(email);
   };
-  const logout = () => {
+  const onLogout = () => {
     setIsLogged(false);
     removeToken();
     setEmail("");
@@ -23,8 +23,8 @@ export function AuthProvider({ children }) {
       value={{
         isLogged,
         email,
-        login,
-        logout,
+        onLogin,
+        onLogout,
       }}
     >
       {children}

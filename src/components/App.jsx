@@ -21,7 +21,7 @@ function App() {
   const [loading, setLoading] = useState(!!getToken());
 
   const navigate = useNavigate();
-  const { login } = useContext(AuthContext);
+  const {onLogin } = useContext(AuthContext);
 
   function handleOpenPopup(popup) {
     setPopup(popup);
@@ -42,7 +42,7 @@ function App() {
 
     checkToken(jwt)
       .then((data) => {
-        login({
+        onLogin({
           token: jwt,
           email: data.data.email,
         });
@@ -104,7 +104,7 @@ function App() {
 
   const handleLogin = ({ email, password }) => {
     authorize(email, password).then((data) => {
-      login({ email, token: data.token });
+      onLogin({ email, token: data.token });
       navigate("/");
     });
   };
